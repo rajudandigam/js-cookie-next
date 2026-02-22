@@ -6,4 +6,5 @@ alwaysApply: true
 
 This repo is **js-cookie-next**: a vanilla browser cookie utility with zero runtime deps, strict TypeScript, Cookie Store API (async) with document.cookie fallback, CHIPS-aware options, and SSR-safe design.
 
-**Single source of truth:** [docs/ARCH.md](../../docs/ARCH.md) and [docs/API.md](../../docs/API.md) — read them for architecture, module layout, API contract, and behavior. Follow them when implementing or changing the library.
+- **Repo execution guide (structure, build order, testing, CI):** [docs/DEV-ARCHITECTURE.md](../../docs/DEV-ARCHITECTURE.md) — single source of truth for how to extend and build the repo.
+- **Behavior and API contract (locked):** [docs/API.md](../../docs/API.md) and [docs/ARCH.md](../../docs/ARCH.md) — follow them for all public API and internal architecture.

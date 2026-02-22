@@ -2,6 +2,6 @@
 - Do not add runtime dependencies unless explicitly required. Dev dependencies are allowed.
 - All library code lives under src/. Core sync in src/core/; async layer in src/async/. No React or framework-specific code.
 - Never access window, document, or navigator at module top-level (SSR-safe). Check at call time inside functions.
-- Public API and behavior must follow docs/API.md. Structure and modules must follow docs/ARCH.md.
-- Tests: Vitest for unit (jsdom). Do not rely on clipboard or OS-specific APIs in tests.
+- Repo execution guide (structure, order, testing, CI): docs/DEV-ARCHITECTURE.md. Behavior and API contract: docs/API.md and docs/ARCH.md (locked).
+- Implement one module at a time; add tests with each module. No speculative features beyond docs/PRD.md.
 - Packaging: ESM + CJS via tsup; exports map with types, import, require. Publish dist only.
