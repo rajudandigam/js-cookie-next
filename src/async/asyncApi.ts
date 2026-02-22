@@ -7,7 +7,7 @@ import * as adapter from "./cookieStoreAdapter.js";
 
 /**
  * Async get: cookieStore when available, else Promise.resolve(sync get).
- * TODO: Implement fallback per docs/ARCH.md §7.2. SSR-safe.
+ * Per docs/ARCH.md §7.2. SSR-safe.
  */
 export function getAsync(): Promise<Record<string, string>>;
 export function getAsync(name: string): Promise<string | undefined>;
@@ -23,7 +23,7 @@ export function getAsync(
 
 /**
  * Async set: cookieStore when available, else Promise.resolve(sync set).
- * TODO: Implement fallback. SSR-safe.
+ * Per docs/ARCH.md §7.2. SSR-safe.
  */
 export function setAsync(
   name: string,
@@ -37,7 +37,7 @@ export function setAsync(
 
 /**
  * Async remove: cookieStore when available, else Promise.resolve(sync remove).
- * TODO: Implement fallback. SSR-safe.
+ * Per docs/ARCH.md §7.2. SSR-safe.
  */
 export function removeAsync(
   name: string,
