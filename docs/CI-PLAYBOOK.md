@@ -20,9 +20,7 @@ Runs on **pull_request** and **push** to **main**.
    - `npm run build` then `npm run size` (size-limit).
    - Fails if bundle exceeds limits in package.json.
 
-4. **playwright**
-   - Depends on unit and size.
-   - Currently a **no-op** (no E2E harness). A minimal harness can be added later; see docs/ARCH.md. No demo app.
+(Playwright may be added in a future version when an E2E harness exists.)
 
 ### Concurrency
 
@@ -41,4 +39,4 @@ Run the same gates locally:
 npm run test:all
 ```
 
-This runs: typecheck → test → build → size. (Playwright is not part of test:all until an E2E harness exists.)
+This runs: typecheck → test → build → size.

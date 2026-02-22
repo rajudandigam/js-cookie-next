@@ -39,7 +39,7 @@ The publish workflow uses **Trusted Publishing** so you do not need to store `NP
    - Commit the new file under `changeset/`.
 
 3. **Push to main**
-   - CI runs (typecheck, unit, size; Playwright is no-op until E2E harness exists).
+   - CI runs (typecheck, unit, size).
    - The Release workflow runs after push to `main`. It will:
      - Run `npm run test:all`.
      - Run the changesets/action, which:
@@ -51,6 +51,37 @@ The publish workflow uses **Trusted Publishing** so you do not need to store `NP
 4. **Verify**
    - Check the “Release” workflow run on GitHub.
    - Check npm for the new version and updated changelog.
+
+## Manual Pre-Release Checklist
+
+Before relying on the automated release workflow, run locally:
+
+1. **Build**
+   ```bash
+   npm run build
+   ```
+2. **Full gate**
+   ```bash
+   npm run test:all
+   ```
+   (Runs typecheck → test → build → size.)
+
+3. **Add changeset**
+   ```bash
+   npx changeset
+   ```
+   Choose bump (patch/minor/major) and write changelog summary.
+
+4. **Commit and push**
+   ```bash
+   git add changeset/*.md
+   git commit -m "chore: add changeset"
+   git push
+   ```
+
+5. **Verify**
+   - Check the Release workflow run on GitHub Actions.
+   - Check the npm package page for the new version and changelog.
 
 ## Troubleshooting
 
