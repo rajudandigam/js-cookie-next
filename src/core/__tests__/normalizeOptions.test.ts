@@ -3,26 +3,22 @@ import type { CookieOptions } from "../../types.js";
 import { normalizeOptions } from "../normalizeOptions.js";
 
 describe("normalizeOptions", () => {
-  it("returns empty object when options is undefined", () => {
+  it("returns empty object when undefined", () => {
     expect(normalizeOptions(undefined)).toEqual({});
   });
 
-  it("returns empty object when options is null", () => {
+  it("returns empty object when null", () => {
     expect(normalizeOptions(null as unknown as CookieOptions)).toEqual({});
   });
 
-  it("returns copy of options when mode is undefined", () => {
+  it("returns shallow copy (not same reference)", () => {
     const opts = { path: "/", secure: true };
-    expect(normalizeOptions(opts)).toEqual({ path: "/", secure: true });
-    expect(normalizeOptions(opts)).not.toBe(opts);
+    const result = normalizeOptions(opts);
+    expect(result).not.toBe(opts);
+    expect(result).toEqual({ path: "/", secure: true });
   });
 
-  it("returns copy of options when mode is default", () => {
-    const opts = { mode: "default" as const, path: "/" };
-    expect(normalizeOptions(opts)).toEqual({ mode: "default", path: "/" });
-  });
-
-  it("applies partitioned preset when mode is partitioned and attrs missing", () => {
+  it("partitioned mode applies defaults", () => {
     expect(normalizeOptions({ mode: "partitioned" })).toEqual({
       mode: "partitioned",
       partitioned: true,
@@ -31,7 +27,7 @@ describe("normalizeOptions", () => {
     });
   });
 
-  it("explicit partitioned overrides preset", () => {
+  it("explicit partitioned=false overrides default", () => {
     expect(
       normalizeOptions({ mode: "partitioned", partitioned: false })
     ).toEqual({
@@ -42,7 +38,7 @@ describe("normalizeOptions", () => {
     });
   });
 
-  it("explicit secure overrides preset", () => {
+  it("explicit secure=false overrides default", () => {
     expect(normalizeOptions({ mode: "partitioned", secure: false })).toEqual({
       mode: "partitioned",
       partitioned: true,
@@ -51,7 +47,7 @@ describe("normalizeOptions", () => {
     });
   });
 
-  it("explicit sameSite overrides preset", () => {
+  it("explicit sameSite=\"lax\" overrides default", () => {
     expect(
       normalizeOptions({ mode: "partitioned", sameSite: "lax" })
     ).toEqual({
@@ -62,23 +58,16 @@ describe("normalizeOptions", () => {
     });
   });
 
-  it("all three explicit override preset", () => {
-    expect(
-      normalizeOptions({
-        mode: "partitioned",
-        partitioned: false,
-        secure: false,
-        sameSite: "strict",
-      })
-    ).toEqual({
-      mode: "partitioned",
-      partitioned: false,
-      secure: false,
-      sameSite: "strict",
-    });
+  it("non-partitioned mode leaves values untouched", () => {
+    const opts = { mode: "default" as const, path: "/", domain: ".example.com" };
+    const result = normalizeOptions(opts);
+    expect(result).toEqual({ mode: "default", path: "/", domain: ".example.com" });
+    expect(result.partitioned).toBeUndefined();
+    expect(result.secure).toBeUndefined();
+    expect(result.sameSite).toBeUndefined();
   });
 
-  it("does not mutate input", () => {
+  it("original input object not mutated", () => {
     const opts = { mode: "partitioned" as const };
     normalizeOptions(opts);
     expect(opts).toEqual({ mode: "partitioned" });
