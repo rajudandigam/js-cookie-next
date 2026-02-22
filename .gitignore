@@ -34,3 +34,10 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+docs/
+
+.cursor/
+.cursorrules
+.cursor/rules/architecture.mdc
+.cursor/rules/architecture.mdc

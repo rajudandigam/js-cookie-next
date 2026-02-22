@@ -22,8 +22,7 @@ Runs on **pull_request** and **push** to **main**.
 
 4. **playwright**
    - Depends on unit and size.
-   - Installs Playwright browsers with deps, builds, then `npm run test:pw`.
-   - Uploads **playwright-report** artifact (always).
+   - Currently a **no-op** (no E2E harness). A minimal harness can be added later; see docs/ARCH.md. No demo app.
 
 ### Concurrency
 
@@ -42,4 +41,4 @@ Run the same gates locally:
 npm run test:all
 ```
 
-This runs: typecheck → test → build → size → test:pw.
+This runs: typecheck → test → build → size. (Playwright is not part of test:all until an E2E harness exists.)

@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Repository is the template (or your fork) with changesets and publish workflow in place.
+- Repository has changesets and publish workflow in place (e.g. js-cookie-next or your fork).
 - You have publish rights to the npm package.
 
 ## npm Trusted Publishing (OIDC)
@@ -14,8 +14,8 @@ The publish workflow uses **Trusted Publishing** so you do not need to store `NP
    - Go to **Package settings** → **Publishing access** → **Configure Trusted Publishers**.
    - Add a **GitHub** trusted publisher:
      - **Repository owner**: your GitHub org or username.
-     - **Repository name**: e.g. `oss-npm-lib-template` (or your repo).
-     - **Workflow name**: `release.yml` (must match the filename under `.github/workflows/`).
+     - **Repository name**: e.g. `js-cookie-next` (or your repo).
+     - **Workflow name**: `publish.yml` (must match the filename under `.github/workflows/`).
      - **Environment (optional)**: leave blank unless you use environments.
 
 2. **In the repo**
@@ -39,7 +39,7 @@ The publish workflow uses **Trusted Publishing** so you do not need to store `NP
    - Commit the new file under `changeset/`.
 
 3. **Push to main**
-   - CI runs (typecheck, unit, size, Playwright).
+   - CI runs (typecheck, unit, size; Playwright is no-op until E2E harness exists).
    - The Release workflow runs after push to `main`. It will:
      - Run `npm run test:all`.
      - Run the changesets/action, which:
@@ -55,7 +55,7 @@ The publish workflow uses **Trusted Publishing** so you do not need to store `NP
 ## Troubleshooting
 
 - **Permission denied (public)**  
-  Ensure the npm package has **Trusted Publishers** configured and the workflow file name matches.
+  Ensure the npm package has **Trusted Publishers** configured and the workflow file name matches (`publish.yml`).
 
 - **No changesets**  
   The action will not publish. Add a changeset and push again.

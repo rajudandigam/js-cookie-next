@@ -1,9 +1,9 @@
 ---
-description: OSS npm library template — tiered engine, React hook/component/actions, ESM+CJS, Vitest + Playwright, changesets, OIDC-ready release.
+description: js-cookie-next — native-first cookie utility with cookieStore async + document.cookie fallback.
 globs: 
 alwaysApply: true
 ---
 
-This repo is a **template** for building modern TypeScript npm libraries with zero runtime deps, strict types, tiered core engine, React layer (hook, component, action), unit + E2E tests, size gate, and changesets with npm Trusted Publishing.
+This repo is **js-cookie-next**: a vanilla browser cookie utility with zero runtime deps, strict TypeScript, Cookie Store API (async) with document.cookie fallback, CHIPS-aware options, and SSR-safe design.
 
-**Single source of truth:** [docs/DEV-ARCHITECTURE.md](../../docs/DEV-ARCHITECTURE.md) — read it for goals, API contract, engine tiers, repo layout, testing, packaging, and release flow. Follow the implementation order when adding features.
+**Single source of truth:** [docs/ARCH.md](../../docs/ARCH.md) and [docs/API.md](../../docs/API.md) — read them for architecture, module layout, API contract, and behavior. Follow them when implementing or changing the library.

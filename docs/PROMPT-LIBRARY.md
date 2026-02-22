@@ -1,48 +1,42 @@
 # Prompt library (Cursor prompts)
 
-Use these prompts when implementing or changing parts of the library. Replace placeholders like `runEngine` / `RunEngine` with your actual API names when using this for a forked library.
+Use these prompts when implementing or changing parts of js-cookie-next. This is a **vanilla** browser utility (no React). Follow docs/ARCH.md and docs/API.md as the source of truth.
 
 ---
 
-## Engine
+## Core (sync API)
 
-**Prompt:** Implement `runEngine(input, options)` per docs/DEV-ARCHITECTURE.md. SSR-safe: no top-level `window`/`document`/`navigator`. Tier 0: return unsupported + NO_SUPPORT when window or document is missing. Tier 1: fast path (e.g. non-empty short input). Tier 2: fallback (e.g. empty or edge case). Tier 3: structured failure with method and optional code. Always return a structured result `{ success, method, code?, error? }`. Add unit tests for SSR, fast path, fallback, and failed cases.
-
----
-
-## Hook
-
-**Prompt:** Implement `useEngine(options)` that wraps `runEngine`. Return `{ run, running, lastResult, reset }`. On `run(input)`, set running true, call `runEngine(input, options)`, then set lastResult and running false. Do not update state after unmount (use a ref to track mounted). Clean up in useEffect on unmount. Add unit tests for initial state, run updates lastResult, reset clears lastResult, and options passed to runEngine.
+**Prompt:** Implement sync cookie API per docs/API.md and docs/ARCH.md: `get`, `set`, `remove` using `document.cookie`. SSR-safe: no top-level `window`/`document`/`navigator`; guard all browser access inside functions. Include `parse`, `serialize`, and `normalizeOptions` (CHIPS preset) in `src/core/`. Add unit tests for parse, serialize, preset merging, and SSR (no document).
 
 ---
 
-## Component
+## Async API
 
-**Prompt:** Implement `<RunEngine input="..." onResult onSuccess onError>{child}</RunEngine>`. Use `cloneElement` to inject an onClick that: (1) calls the child’s onClick if present, (2) if the event is not defaultPrevented, call `runEngine(input)` and then invoke onResult, and onSuccess or onError depending on the result. Preserve other child props. Add unit tests for click runs engine, onSuccess/onError called correctly, and preventDefault skips running the engine.
+**Prompt:** Implement async API per docs/API.md and docs/ARCH.md: `getAsync`, `setAsync`, `removeAsync`. Use `cookieStore` when available; otherwise fall back to sync implementation wrapped in `Promise.resolve`. Lazy detection only (no top-level access). Add unit tests for fallback when cookieStore is undefined and for native path when mocked.
 
 ---
 
-## Actions
+## Types and options
 
-**Prompt:** Implement `runEngineAction(prevState, formData)` for use with React 19 `useActionState`. Read `"input"` from formData (string or empty string). Call `runEngine(input)` and return state `{ result, error }`. On success set error to null; on failure set error from result.code or result.error. Catch thrown errors and return state with result null and error message. Export `initialState`. Add unit tests for formData input, missing input, failure state, and thrown error.
+**Prompt:** Define `CookieOptions` and default-export wrapper type per docs/API.md. Support `path`, `domain`, `expires`, `maxAge`, `secure`, `sameSite`, `partitioned`, `priority`, `mode`. Implement partitioned preset (mode `"partitioned"` → defaults for partitioned, secure, sameSite).
 
 ---
 
 ## Tests
 
-**Prompt:** Add Vitest unit tests for [engine/hook/component/actions]. Use jsdom. Mock only the core engine where testing React code. Cover: happy path, failure path, edge cases (empty input, SSR for engine). Assert structured result shape and that no state updates happen after unmount for the hook.
+**Prompt:** Add Vitest unit tests for [core/async]. Use jsdom. Cover: parse correctness, serialize formatting, preset merging, removal semantics, dev warnings, fallback when cookieStore missing. Do not rely on OS-specific or clipboard APIs.
 
 ---
 
 ## Packaging
 
-**Prompt:** Ensure package.json exports map has ".", "./core", "./react" with types, import, and require. tsup.config.ts entry keys match. Build outputs dist/*.mjs, dist/*.cjs, and dist/*.d.ts. Demo vite.config.ts resolve.alias points at dist/*.mjs. No runtime dependencies; peerDependencies only for React.
+**Prompt:** Ensure package.json exports map has "." with types, import, and require. tsup.config.ts single entry for `src/index.ts`. Build outputs dist/index.mjs, dist/index.cjs, dist/index.d.ts. No runtime dependencies. Size limit for dist/index.mjs (see package.json).
 
 ---
 
 ## CI
 
-**Prompt:** CI workflow: jobs typecheck, unit (with coverage artifact), size (after build), playwright (after unit and size). Use Node 20, npm ci. Upload coverage and playwright-report artifacts on failure/success as needed. Concurrency group on ref. No secrets required for CI.
+**Prompt:** CI workflow: jobs typecheck, unit (with coverage artifact), size (after build), playwright (no-op until harness exists). Use Node 20, npm ci. Concurrency group on ref. No secrets required for CI.
 
 ---
 

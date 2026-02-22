@@ -1,8 +1,7 @@
 - Use TypeScript with strict mode. No implicit any; prefer explicit types for public API.
 - Do not add runtime dependencies unless explicitly required. Dev dependencies are allowed.
-- All library code lives under src/. Core (framework-agnostic) in src/core/; React-specific in src/react/.
+- All library code lives under src/. Core sync in src/core/; async layer in src/async/. No React or framework-specific code.
 - Never access window, document, or navigator at module top-level (SSR-safe). Check at call time inside functions.
-- Public API must return structured results (e.g. { success, method, code?, error? }). No UI assumptions (no toasts, dialogs).
-- Tests: Vitest for unit (jsdom), Playwright for E2E using demo app. Do not rely on clipboard or OS-specific APIs in E2E assertions.
-- Single source of truth: docs/DEV-ARCHITECTURE.md. For architecture decisions and layout, read that first.
+- Public API and behavior must follow docs/API.md. Structure and modules must follow docs/ARCH.md.
+- Tests: Vitest for unit (jsdom). Do not rely on clipboard or OS-specific APIs in tests.
 - Packaging: ESM + CJS via tsup; exports map with types, import, require. Publish dist only.
