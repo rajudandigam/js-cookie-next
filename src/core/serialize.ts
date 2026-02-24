@@ -29,7 +29,7 @@ export function serialize(
   const encodedValue = encodeURIComponent(value);
   const parts: string[] = [`${encodedName}=${encodedValue}`];
 
-  if (options == null) return parts[0];
+  if (options == null) return parts[0] ?? "";
 
   const opts = options as Record<string, string | number | boolean | Date | undefined>;
 
