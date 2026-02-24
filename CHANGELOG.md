@@ -1,6 +1,6 @@
 # js-cookie-next
 
-## 2.0.0
+## 1.0.1
 
 ### Major Changes
 
@@ -8,7 +8,4 @@
 
 ### Patch Changes
 
-- d4f57ec: updated package json
-- e35f8f1: updated readme
-- 5127705: updated package json
 - 85e5ab5: updated readme
