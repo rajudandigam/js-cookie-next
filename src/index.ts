@@ -6,14 +6,3 @@ import { getAsync, setAsync, removeAsync } from "./async/asyncApi.js";
 
 export { get, set, remove, getAsync, setAsync, removeAsync };
 export type { CookieOptions };
-
-const Cookies = {
-  get,
-  set,
-  remove,
-  getAsync,
-  setAsync,
-  removeAsync,
-};
-
-export default Cookies;

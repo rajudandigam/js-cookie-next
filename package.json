@@ -1,7 +1,7 @@
 {
   "name": "js-cookie-next",
   "version": "0.0.0",
-  "description": "The js-cookie API, modernized for 2026 — TypeScript-first, CHIPS-aware, and async-ready via Cookie Store API (with safe fallbacks).",
+  "description": "Native-first, TypeScript-first cookie utility for modern browsers.",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
@@ -14,42 +14,20 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
-    },
-    "./core": {
-      "types": "./dist/core.d.ts",
-      "import": "./dist/core.mjs",
-      "require": "./dist/core.cjs"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/YOUR_GITHUB_ORG/js-cookie-next.git"
-  },
-  "bugs": {
-    "url": "https://github.com/YOUR_GITHUB_ORG/js-cookie-next/issues"
-  },
-  "homepage": "https://github.com/YOUR_GITHUB_ORG/js-cookie-next#readme",
-  "keywords": ["cookies", "cookieStore", "CHIPS", "partitioned", "typescript", "browser"],
-  "publishConfig": {
-    "access": "public"
-  },
-  "engines": {
-    "node": ">=18"
-  },
+  "publishConfig": { "access": "public" },
   "scripts": {
     "clean": "rm -rf dist coverage playwright-report .size-limit",
-    "build": "tsup",
+    "build": "tsup && rm -f dist/*.d.cts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "test:pw": "playwright test --config playwright/playwright.config.ts",
     "size": "size-limit",
     "test:all": "npm run typecheck && npm run test && npm run build && npm run size",
     "prepack": "npm run clean && npm run build",
     "release": "changeset publish"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
     "@size-limit/preset-small-lib": "^11.2.0",
     "@vitest/coverage-v8": "^1.3.0",
     "@changesets/cli": "^2.29.0",
@@ -59,10 +37,5 @@
     "typescript": "^5.4.0",
     "vitest": "^1.3.0"
   },
-  "size-limit": [
-    {
-      "path": "dist/index.mjs",
-      "limit": "2 KB"
-    }
-  ]
+  "size-limit": [{ "path": "dist/index.mjs", "limit": "2 KB" }]
 }

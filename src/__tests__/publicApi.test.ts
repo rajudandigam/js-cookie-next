@@ -25,14 +25,4 @@ describe("public API surface", () => {
   it("exports removeAsync as function", () => {
     expect(typeof lib.removeAsync).toBe("function");
   });
-
-  it("exports default object with same methods", () => {
-    expect(lib.default).toBeDefined();
-    expect(lib.default.get).toBe(lib.get);
-    expect(lib.default.set).toBe(lib.set);
-    expect(lib.default.remove).toBe(lib.remove);
-    expect(lib.default.getAsync).toBe(lib.getAsync);
-    expect(lib.default.setAsync).toBe(lib.setAsync);
-    expect(lib.default.removeAsync).toBe(lib.removeAsync);
-  });
 });
