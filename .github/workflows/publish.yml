@@ -2,30 +2,23 @@ name: Release
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
-concurrency:
-  group: release-${{ github.ref }}
-  cancel-in-progress: true
+permissions:
+  contents: write
+  id-token: write
 
 jobs:
   release:
-    name: Version & Publish
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      pull-requests: write
-      id-token: write
-
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          registry-url: https://registry.npmjs.org/
+          registry-url: "https://registry.npmjs.org"
 
       - run: npm ci
       - run: npx tsc --noEmit && npm run test && npm run build && npm run size
@@ -33,7 +26,5 @@ jobs:
       - uses: changesets/action@v1
         with:
           publish: npx changeset publish
-          commit: "chore: release"
-          title: "chore: release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
