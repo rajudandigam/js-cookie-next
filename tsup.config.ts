@@ -1,10 +1,8 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: {
-    index: "src/index.ts",
-  },
-  format: ["esm", "cjs"],
+  entry: { index: "src/index.ts" },
+  format: ["esm"],
   dts: true,
   clean: true,
   sourcemap: false,
@@ -13,9 +11,4 @@ export default defineConfig({
   splitting: false,
   target: "es2020",
   outDir: "dist",
-  outExtension({ format }) {
-    return {
-      js: format === "cjs" ? ".cjs" : ".mjs",
-    };
-  },
 });

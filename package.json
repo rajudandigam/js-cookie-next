@@ -6,26 +6,22 @@
   "type": "module",
   "sideEffects": false,
   "files": ["dist"],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     }
   },
   "publishConfig": { "access": "public" },
   "scripts": {
     "clean": "rm -rf dist coverage playwright-report .size-limit",
-    "build": "tsup && rm -f dist/*.d.cts",
+    "build": "tsup",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "size": "size-limit",
     "test:all": "npm run typecheck && npm run test && npm run build && npm run size",
-    "prepack": "npm run clean && npm run build",
-    "release": "changeset publish"
+    "prepack": "npm run clean && npm run build"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^11.2.0",
@@ -37,5 +33,5 @@
     "typescript": "^5.4.0",
     "vitest": "^1.3.0"
   },
-  "size-limit": [{ "path": "dist/index.mjs", "limit": "2 KB" }]
+  "size-limit": [{ "path": "dist/index.js", "limit": "2 KB" }]
 }
