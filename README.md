@@ -9,15 +9,11 @@ Native-first, TypeScript-first cookie utility for modern browsers.
 - < 2 KB gzipped
 - SSR-safe import
 
----
-
 ## Installation
 
 ```bash
 npm install js-cookie-next
 ```
-
-Supports both ESM and CommonJS automatically via the package exports map.
 
 ## Basic Usage (Sync API)
 
@@ -31,9 +27,7 @@ console.log(get("theme")); // "dark"
 remove("theme", { path: "/" });
 ```
 
-`get()` returns `undefined` if the cookie does not exist.
-
-`remove()` must match the same path and domain used when setting.
+`get()` returns `undefined` if the cookie does not exist. `remove()` must match the same path and domain used when setting.
 
 ## Async API
 
@@ -49,23 +43,13 @@ const token = await getAsync("token");
 await removeAsync("token");
 ```
 
-The fallback behavior is deterministic and does not change the public API.
-
 ## Partitioned (CHIPS) Mode
-
-For third-party contexts requiring partitioned cookies:
 
 ```js
 set("widget_session", "xyz", { mode: "partitioned" });
 ```
 
-This expands to:
-
-- `partitioned: true`
-- `secure: true`
-- `sameSite: "none"`
-
-Browser support varies. This preset ensures required attributes are applied but does not guarantee acceptance.
+Expands to `partitioned: true`, `secure: true`, `sameSite: "none"`. Partitioned support depends on browser support.
 
 ## CookieOptions
 
@@ -83,32 +67,17 @@ interface CookieOptions {
 }
 ```
 
-- `expires` as a number represents days from now.
-- `mode: "partitioned"` applies the recommended preset for partitioned cookies.
-- Unsupported attributes are ignored in async CookieStore mode.
+`expires` as a number is days from now. `mode: "partitioned"` applies the preset.
 
 ## Behavior Notes
 
-- Removal must match the same path and domain used during set.
+- Removal must match path and domain used when setting.
 - `sameSite: "none"` requires `secure: true` in modern browsers.
-- Partitioned cookies depend on browser support.
-- Importing the library is safe in SSR environments.
-- Sync APIs are no-ops when `document` is undefined.
+- Import is SSR-safe; sync APIs are no-ops when `document` is undefined.
 
 ## Size
 
-- < 2 KB gzipped
-- Zero runtime dependencies
-
-## Comparison
-
-| Feature | js-cookie | js-cookie-next |
-|---------|-----------|----------------|
-| Sync API | ✓ | ✓ |
-| Async CookieStore | ✗ | ✓ |
-| Partitioned preset | ✗ | ✓ |
-| TypeScript-first | ✗ | ✓ |
-| Zero dependencies | ✓ | ✓ |
+< 2 KB gzipped
 
 ## License
 

@@ -28,7 +28,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - run: npm ci
-      - run: npm run test:all
+      - run: npx tsc --noEmit && npm run test && npm run build && npm run size
 
       - uses: changesets/action@v1
         with:

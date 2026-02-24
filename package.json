@@ -13,14 +13,11 @@
       "import": "./dist/index.js"
     }
   },
-  "publishConfig": { "access": "public" },
   "scripts": {
     "clean": "rm -rf dist coverage playwright-report .size-limit",
     "build": "tsup",
-    "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "size": "size-limit",
-    "test:all": "npm run typecheck && npm run test && npm run build && npm run size",
     "prepack": "npm run clean && npm run build"
   },
   "devDependencies": {
