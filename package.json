@@ -17,11 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_GITHUB_USERNAME/js-cookie-next.git"
-  },
-  "homepage": "https://github.com/YOUR_GITHUB_USERNAME/js-cookie-next#readme",
-  "bugs": {
-    "url": "https://github.com/YOUR_GITHUB_USERNAME/js-cookie-next/issues"
+    "url": "https://github.com/rajudandigam/js-cookie-next.git"
   },
   "keywords": [
     "cookies",
